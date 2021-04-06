@@ -1,0 +1,93 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: The discount codes service
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8080
+paths:
+  /discount-codes/{brand}:
+    get:
+      summary: Get a discount code from a brand
+      operationId: getDiscountCode
+      tags:
+        - discount code
+      parameters:
+        - name: brand
+          in: path
+          description: The brand name for which the discount code is needed
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: The data object with discount code
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/DiscountCode"
+        default:
+          description: Discount code not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Generate a discount code for the given brand
+      operationId: generateDiscountCode
+      tags:
+        - Discount code
+      requestBody:
+        description: The brand and whether the discount code should be active
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateDiscountCode'
+      responses:
+        201:
+          description: The data object with newly generated discount code
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/DiscountCode"
+        default:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    DiscountCode:
+      type: object
+      required:
+        - brand
+        - isActive
+        - discountCode
+      properties:
+        brand:
+          type: string
+        isActive:
+          type: boolean
+        discountCode:
+          type: string
+    GenerateDiscountCode:
+      type: object
+      required:
+        - brand
+        - isActive
+      properties:
+        brand:
+          type: string
+        isActive:
+          type: boolean
+    Error:
+      required:
+        - message
+      properties:
+        message:
+          type: string
+        errors:
+          type: array
