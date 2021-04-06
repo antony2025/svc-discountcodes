@@ -1,0 +1,21 @@
+{
+  "name": "svc-discountcodes",
+  "version": "1.0.0",
+  "description": "The discount codes service",
+  "main": "app.js",
+  "author": "Antony",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "4.17.1",
+    "express-validator": "6.10.0"
+  },
+  "devDependencies": {
+    "jest": "26.6.3",
+    "nodemon": "2.0.7"
+  },
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "jest --watchAll"
+  }
+}
